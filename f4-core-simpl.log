@@ -1,0 +1,72 @@
+Main.fSub3 :: Char
+Main.fSub3 = C# '['#
+
+Main.fSub2 :: Char
+Main.fSub2 = C# ']'#
+
+Main.fSub1 :: Char
+Main.fSub1 = C# '@'#
+
+lvl_r4Pe :: Char
+lvl_r4Pe = C# ','#
+
+Rec {
+Main.$wfRest4 :: [[Char]] -> [Char] -> (# Char, [Char] #)
+Main.$wfRest4 = \y_ys s ->
+  case y_ys of {
+    [] -> (# Main.fSub2, s #);
+    (y:ys) ->
+      (# lvl_r4Pe,
+          : Main.fSub1
+            (++ y
+              (case Main.$wfRest4 ys s of
+                { (# ww1_s4LQ, ww2_s4LR #) -> : ww1_s4LQ ww2_s4LR })) #)
+  }
+end Rec }
+
+fSub4 :: [String] -> ShowS
+fSub4 = \x_xs s ->
+  case x_xs of {
+    [] -> : Main.fSub3 (: Main.fSub2 s);
+    (x:xs) ->
+      : Main.fSub3
+        (: Main.fSub1
+            (++ x
+              (case Main.$wfRest4 xs s of
+                { (# ww1_s4LQ, ww2_s4LR #) -> : ww1_s4LQ ww2_s4LR })))
+  }
+
+Main.f2 :: Addr#
+Main.f2 = "$"#
+
+Main.f1 :: [Char]
+Main.f1 = unpackCString# Main.f2
+
+Main.main25 :: [Char]
+Main.main25 = : Main.fSub2 Main.f1
+
+Main.main24 :: [Char]
+Main.main24 = : Main.fSub3 Main.main25
+
+f4 :: [String] -> String
+f4 = \x_xs ->
+  case x_xs of {
+    [] -> Main.main24;
+    (x:xs) -> : Main.fSub3
+      (: Main.fSub1
+        (let {
+          z_a3d9
+            = case Main.$wfRest4 xs Main.f1 of
+              { (# ww1_s4LQ, ww2_s4LR #) ->
+              Types.: @ Char ww1_s4LQ ww2_s4LR
+              } } in
+        letrec {
+          go_a3da
+            = \ (ds_a3db :: [Char]) ->
+                case ds_a3db of {
+                  [] -> z_a3d9;
+                  : y_a3dg ys_a3dh ->
+                    Types.: @ Char y_a3dg (go_a3da ys_a3dh)
+                }; } in
+        go_a3da x))
+  }

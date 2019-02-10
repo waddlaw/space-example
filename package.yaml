@@ -1,0 +1,21 @@
+name: space-example
+version: 0.1.0.0
+
+dependencies:
+- base >= 4.7 && < 5
+
+executables:
+  f0:
+    main: app/F0.hs
+  f1:
+    main: app/F1.hs
+  f2:
+    main: app/F2.hs
+  f3:
+    main: app/F3.hs
+  f4:
+    main: app/F4.hs
+
+tests:
+  space-example-test:
+    main: test/Spec.hs

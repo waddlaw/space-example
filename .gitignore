@@ -1,0 +1,7 @@
+.stack-work/
+space-example.cabal
+*~
+dist-newstyle/
+*.o
+*.hi
+.ghc.environment.*

@@ -1,0 +1,42 @@
+Main.fSub4 :: Char
+Main.fSub4 = C# '['#
+
+Main.fSub3 :: Char
+Main.fSub3 = C# ']'#
+
+Main.fSub1 :: Char
+Main.fSub1 = C# ','#
+
+Main.fSub5 :: Addr#
+Main.fSub5 = "[]"#
+
+fSub2 :: forall a. (a -> ShowS) -> [a] -> ShowS
+fSub2 = \f x_xs s ->
+  case x_xs of {
+    [] -> unpackAppendCString# Main.fSub5 s;
+    (x:xs) -> (:) Main.fSub4
+        (f x
+            (let { lvl1_s4RO = (:) Main.fSub3 s } in
+             letrec {
+              fRest2 = \y_ys ->
+                case y_ys of {
+                  [] -> lvl1_s4RO;
+                  (y:ys) -> : Main.fSub1 (f y (fRest2 ys))
+                }; } in
+            fRest2 xs))
+  }
+
+Main.f5 :: Char
+Main.f5 = C# '@'#
+
+Main.f4 :: [Char] -> String -> [Char]
+Main.f4 = \x s -> (:) Main.f5 (++ x s)
+
+Main.f3 :: Addr#
+Main.f3 = "$"#
+
+Main.f1 :: [Char]
+Main.f1 = unpackCString# Main.f3
+
+f2 :: [String] -> String
+f2 = \xs -> fSub2 Main.f4 xs Main.f1
